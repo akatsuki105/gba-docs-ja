@@ -4,7 +4,7 @@
 
 オペコードの末尾に`{cond}`をつけるとCPSRレジスタのC,N,Z,Vフラグに基づいて実行されるかされないかが変わってきます。
 
-例えば、BEQは Branch if Equal の略でZフラグが立っているときに分岐し、MOVMIは Move if Singed の略です。
+例えば、`BEQ`は `Branch if Equal` の略でZフラグが立っているときに分岐し、`MOVMI`は `Move if Singed` の略でNフラグが立っている時に実行されます。
 
 ARMステートのとき、`{cond}`はすべてのオペコードで使うことができます。 THUMBステートでは`{cond}`は分岐命令でのみ使用できます。
 
@@ -14,12 +14,12 @@ ARMステートのとき、`{cond}`はすべてのオペコードで使うこと
 1 | NE | Z=0 | 値が異なる、非0
 2 | CS/HS | C=1 |  unsigned higher or same (carry set)
 3 | CC/LO | C=0         | unsigned lower (carry cleared)
-4 | MI    | N=1         | signed negative (minus)
-5 | PL    | N=0         | signed positive or zero (plus)
+4 | MI    | N=1         | 前の処理結果が負
+5 | PL    | N=0         | 前の処理結果が0以上
 6 | VS    | V=1         | signed overflow (V set)
 7 | VC    | V=0         | signed no overflow (V cleared)
-8 | HI    | C=1 && Z=0 | unsigned higher
-9 | LS    | C=0 || Z=1  | unsigned lower or same
+8 | HI    | C=1 and Z=0 | unsigned higher
+9 | LS    | C=0 or Z=1  | unsigned lower or same
 A | GE    | N=V         | signed greater or equal
 B | LT    | N≠V        | signed less than
 C | GT    | Z=0 and N=V | signed greater than
@@ -29,31 +29,31 @@ F | NV    | -           | never (ARMv1,v2 only) (Reserved ARMv3 and up)
 
 実行時間
 
-- 条件が満たされた: それぞれのオペコードの実行時間
+- 条件が満たされた時: それぞれのオペコードの実行時間
 - 条件が満たされなかった時: 1S
 
 ## CPSR
 
  bit  |  内容
 ---- | ----
-31 | N - Signフラグ (1=Signed)
-30 | Z - Zeroフラグ (1=Zero)
-29 | C - Carryフラグ (1=Carry/No Borrow)
-28 | V - Overflowフラグ (1=Overflow)
-27 | Q - Stickyフラグ (GBAでは未使用)
-26-8 | 予約 
-7 | I - IRQ無効フラグ (1=IRQ無効)
-6 | F - FIQ無効フラグ (1=FIQ無効)
+0-4 | M0-M4 - モード(後述)
 5 | T - THUMBフラグ (0=ARM, 1=THUMB)
-4-0 | M4-M0 - モード(後述)
+6 | F - FIQ無効フラグ (1=FIQ無効)
+7 | I - IRQ無効フラグ (1=IRQ無効)
+8-26 | 予約 
+27 | Q - Stickyフラグ (GBAでは未使用)
+28 | V - Overflowフラグ (1=Overflow)
+29 | C - Carryフラグ (1=Carry/No Borrow)
+30 | Z - Zeroフラグ (1=Zero)
+31 | N - Signフラグ (1=Signed)
 
-### Bit31-28(NZCV)
+### Bit28-31(NZCV)
 
 これらのビットは、論理命令または算術命令の結果を反映します。
 
 ARMステートでは、ある命令がフラグを修正するかどうかは任意であることが多く、例えば、条件フラグを修正しないSUB命令を実行することも可能です。
 
-ARMステートでは、MOVEQ（Z=1なら移動）のように、フラグの設定次第で全ての命令を条件付きで実行することができます。THUMBステートでは、分岐命令（ジャンプ）のみ条件付きで実行できます。
+ARMステートでは、`MOVEQ（if Z=1, MOV）`のように、フラグの設定次第で全ての命令を条件付きで実行することができます。THUMBステートでは、分岐命令（ジャンプ）のみ条件付きで実行できます。
 
 ### Bit 27(Q)
 
@@ -61,7 +61,7 @@ ARMv5TE/ARMv5TExP 以降のみ有効
 
 **GBAはサポートしていません**
 
-### Bit7-0 制御ビット
+### Bit0-7 制御ビット
 
 これらのbitは例外が起きた時に変わる可能性があります。特権モード(非ユーザモード)では手動で変更することができます。
 
@@ -85,15 +85,16 @@ M4-M0は現在の動作モードを表します。
 0b11011 | Undefined | 
 0b11111 | System | 特権"ユーザ"モード
 
-M4-M0を上記の値以外にすることはできません。
+M0-M4を上記の値以外にすることはできません。
 
 ## SPSR (SPSR_${mode})
 
-Saved Program Status Registersの略
+`Saved Program Status Registers`の略
 
-上記のCPSRに加えて5つのSPSRが存在します: SPSR_fiq, SPSR_svc, SPSR_abt, SPSR_irq, SPSR_und
+上記のCPSRに加えて5つのSPSRが存在します: `SPSR_fiq, SPSR_svc, SPSR_abt, SPSR_irq, SPSR_und`
 
-CPUが例外を起こすと、現在のステータスレジスタ（CPSR）が対応するSPSRレジスタにコピーされます。各モードには1つのSPSRしかないので、同じモード内でネストした例外は、例外ハンドラがSPSRの内容をスタックに退避している場合にのみ許可されることに注意してください。
+CPUが例外を起こすと、現在のステータスレジスタ（CPSR）が対応するSPSRレジスタにコピーされます。
+
+各モードには1つのSPSRしかないので、同じモード内でネストした例外は、例外ハンドラがSPSRの内容をスタックに退避している場合にのみ許可されることに注意してください。
 
 例えば、IRQ例外の場合。IRQモードが入力され、CPSRがSPSR_irqにコピーされます。割り込みハンドラがネストしたIRQを有効にしたい場合は、その前にまずSPSR_irqをプッシュしなければなりません。
-
