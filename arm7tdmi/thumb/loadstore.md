@@ -1,9 +1,12 @@
 # ロード/ストア命令
 
-## THUMB.6: load PC-relative (for loading immediates from literal pool)
+## THUMB.6: load PC-relative
 
-処理内容: 32bit読み込む (`Rd = WORD[PC+nn]`)
-アセンブリ: `LDR Rd,[PC,#nn]`
+PCからの相対アドレスで指定したメモリから32bitデータをロード/ストアする命令です。リテラルプールからのデータ読み込みで頻繁に利用します。
+
+```s
+  LDR Rd,[PC,#nn]
+```
 
  bit  |  内容
 ---- | ----
@@ -18,6 +21,8 @@ PCは`($+4) AND NOT 2` として扱われます。(`$`: この命令のあるア
 実行時間: 1S+1N+1I
 
 ## THUMB.7: load/store with register offset
+
+RbレジスタとRoレジスタに入っているオフセットで指定したメモリから32bitデータ(または8bitデータ)をロード/ストアする命令です。
 
  bit  |  内容
 ---- | ----
@@ -73,6 +78,8 @@ PCは`($+4) AND NOT 2` として扱われます。(`$`: この命令のあるア
 
 ## THUMB.9: load/store with immediate offset
 
+Rbレジスタと即値オフセットで指定したメモリから32bitデータ(または8bitデータ)をロード/ストアする命令です。
+
  bit  |  内容
 ---- | ----
 15-13 | 0b011
@@ -99,6 +106,8 @@ PCは`($+4) AND NOT 2` として扱われます。(`$`: この命令のあるア
 
 ## THUMB.10: load/store halfword
 
+Rbレジスタと即値オフセットで指定したメモリから16bitデータをロード/ストアする命令です。
+
  bit  |  内容
 ---- | ----
 15-12 | 0b1000
@@ -122,6 +131,8 @@ PCは`($+4) AND NOT 2` として扱われます。(`$`: この命令のあるア
 - STR: 2N
 
 ## THUMB.11: load/store SP-relative
+
+SPからの相対アドレスで指定したメモリから32bitデータをロード/ストアする命令です。
 
  bit  |  内容
 ---- | ----

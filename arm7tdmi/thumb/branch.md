@@ -1,6 +1,6 @@
 # 分岐命令
 
-## THUMB.16: conditional branch
+## THUMB.16: 条件付き分岐
 
 ビット | 内容
 -- | --
@@ -36,7 +36,7 @@ f: SWIのために予約
 - true: 2S+1N
 - false: 1S
 
-## THUMB.17: software interrupt and breakpoint
+## THUMB.17: ソフトウェア割り込み \& ブレーク
 
 SWIはOSの機能を呼び出す際に使用されます。 
 
@@ -57,7 +57,7 @@ SWIからの復帰には `MOVS PC,R14`を使用しますが、この命令はPC�
 
 実行時間: 2S+1N
 
-## THUMB.18: unconditional branch
+## THUMB.18: 無条件分岐
 
 `B label`のこと
 
@@ -70,11 +70,11 @@ SWIからの復帰には `MOVS PC,R14`を使用しますが、この命令はPC�
 
 実行時間: 2S+1N
 
-## THUMB.19: long branch with link
+## THUMB.19: サブルーチンコール
 
 この命令はリターン先がR14になっているサブルーチンのコール(or ジャンプ)に利用されます。
 
-THUMBモードの命令は16bitですが、この命令は32bit長です。
+THUMBモードの命令は16bitですが、この命令は32bit長です。<sup>[1](#exception)</sup> <sup>[2](#bl)</sup>
 
 **1つ目(0-15)**
 
@@ -100,11 +100,8 @@ PC = LR + (nn SHL 1), and LR = PC+2 OR 1 (and BLX: T=0)
 
 実行時間: 3S+1N (1つ目: 1S, 2つ目: 2S+1N)
 
-### 注意
-
-1つ目のオペコードと2つ目のオペコードの間に例外が起きるかどうかは未定義です。
-
-`BL LR+imm`として2つ目のオペコードだけを使うことも可能です。
+<sup id="exception">1: 1つ目のオペコードと2つ目のオペコードの間に例外が起きるかどうかは未定義です。</sup>  
+<sup id="bl">2: `BL LR+imm`として2つ目のオペコードだけを使うことも可能です。</sup>
 
 ## BX
 
