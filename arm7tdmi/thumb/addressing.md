@@ -1,6 +1,6 @@
 # アドレッシング
 
-## THUMB.12: get relative address
+## THUMB.12: PC/SPからの相対アドレス取得
 
 PCやSPからnnだけ離れたアドレスを取得する命令です。
 
@@ -22,7 +22,7 @@ PCやSPからnnだけ離れたアドレスを取得する命令です。
 
 実行時間: 1S
 
-## THUMB.13: add offset to stack pointer
+## THUMB.13: SP操作
 
 SPをnnだけ動かす命令です。
 

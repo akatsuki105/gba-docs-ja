@@ -62,7 +62,7 @@ GameBoyAdvanceについて、技術的な詳細を日本語でまとめたもの
 - [THUMB命令一覧](arm7tdmi/thumb/instruction.md)
   - [レジスタ操作](arm7tdmi/thumb/register.md)
   - [ロード/ストア](arm7tdmi/thumb/loadstore.md)
-  - [ロード/ストア その2](arm7tdmi/thumb/loadstore2.md)
+  - [ロード/ストア(スタック)](arm7tdmi/thumb/loadstore2.md)
   - [アドレッシング](arm7tdmi/thumb/addressing.md)
   - [分岐命令](arm7tdmi/thumb/branch.md)
 - [サイクル](arm7tdmi/cycle.md)
