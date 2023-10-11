@@ -15,7 +15,7 @@
 ## A/D変換
 
 ```
-Note: 筆者(pokemium)が電子回路に詳しくないため、間違った記述があるかもしれません。
+Note: 筆者(Akatsuki)が電子回路に詳しくないため、間違った記述があるかもしれません。
 ```
 
 このカートリッジは、独自の[Digital Ramp ADC](https://www.allaboutcircuits.com/textbook/digital/chpt-13/digital-ramp-adc/)を使用しています。

@@ -23,6 +23,7 @@ GameBoyAdvanceについて、技術的な詳細を日本語でまとめたもの
   - [WAITCNT](system.md)
   - [POSTFLG](system.md)
   - [HALTCNT](system.md)
+  - [MEMCNT](system.md)
 - [タイマー(TMnCNT)](timer.md)
 - [サウンド](sound.md)
 - [キー入力](keypad.md)
@@ -132,9 +133,9 @@ GameBoyAdvanceについて、技術的な詳細を日本語でまとめたもの
 
 ## 関連するレポジトリ
 
-- [gb-docs-ja](https://github.com/pokemium/gb-docs-ja): GameBoyについて
-- [nds-docs-ja](https://github.com/pokemium/nds-docs-ja): Nintendo DSについて
-- [snes-docs-ja](https://github.com/pokemium/snes-docs-ja): スーパーファミコンについて
+- [gb-docs-ja](https://github.com/akatsuki105/gb-docs-ja): GameBoyについて
+- [nds-docs-ja](https://github.com/akatsuki105/nds-docs-ja): Nintendo DSについて
+- [snes-docs-ja](https://github.com/akatsuki105/snes-docs-ja): スーパーファミコンについて
 
 ## 参考記事
 

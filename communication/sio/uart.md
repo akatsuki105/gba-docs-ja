@@ -1,7 +1,7 @@
 # [UARTモード](https://mgba-emu.github.io/gbatek/#siouartmode)
 
 ```
-Note: 筆者(pokemium)がハードウェアに詳しくないため、間違った記述があるかもしれません。
+Note: 筆者(Akatsuki)がハードウェアに詳しくないため、間違った記述があるかもしれません。
 ```
 
 UART = Universal Asynchronous Receiver/Transmitter（汎用非同期送受信機）

@@ -6,7 +6,7 @@ RTCは、ポケモンシリーズやボクらの太陽シリーズで使用さ�
 
 GBAのRTCには、ボクらの太陽の場合、S3511という、3線式のシリアルバスをもった8ピンのRTCが使われています。
 
-このRTCチップはほとんど[NDSで使われているもの](https://github.com/pokemium/nds-docs-ja/blob/main/system/rtc.md)と同じように使用されます。
+このRTCチップはほとんど[NDSで使われているもの](https://github.com/akatsuki105/nds-docs-ja/blob/main/system/rtc.md)と同じように使用されます。
 
 このRTCチップは4bit幅のIOポート(GPIO)を通じてアクセスします。RTCで使うのは3bitだけです。
 

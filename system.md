@@ -41,7 +41,7 @@ WAITCNTは起動時には0x0000_0000です。
 
 注意: GBAはカートリッジROMの各128Kブロックの先頭にアクセスする際には強制的にノンシーケンシャルアクセスします。 またPHI端子出力(Gamepak BusのPHIピン)は無効にしてください。
 
-## 0x0400_0300 - POSTFLG - BYTE - Undocumented - Post Boot / Debug Control (R/W)
+## 0x0400_0300 - POSTFLG(Undocumented) - Post Boot / Debug Control (R/W)
 
 最初のリセット後、BIOSはこのレジスタを0x01に初期化しリセットベクタ(0x000000)をさらに実行します。
 
@@ -56,7 +56,7 @@ WAITCNTは起動時には0x0000_0000です。
 
 しかし、このレジスタを自動的にリセットせずにGBAを外部からリセットすることは可能なのかどうかはわかりません。
 
-## 0x0400_0301 - HALTCNT - BYTE - Undocumented - 省電力モード制御レジスタ (W)
+## 0x0400_0301 - HALTCNT(Undocumented) - 省電力モード制御レジスタ (W)
 
 このレジスタに書き込みを行うことでGBAは省電力モードに移行します。
 
@@ -77,22 +77,29 @@ BIOSはこのアドレスに0xFFを書き込みますが目的は不明です。
 
 おそらくBIOSのバグでしょう。
 
-## 4000800h - 32bit - Undocumented - Internal Memory Control (R/W)
+## 0x0400_0800 - MEMCNT(Undocumented) - 内部メモリ制御レジスタ (R/W)
 
-ハードウェアによって`0x0d00_0020`で初期化されます。
+ハードウェアによって`0x0D00_0020`で初期化されます。
 
 他のIOレジスタと違って、このレジスタはIOレジスタ用のメモリ領域にミラーされます。(ここから0x0001_0000刻み。 つまり0x0400_0800, 0x0401_0800, 0x0402_0800, ..., 0x04FF_0800)
 
  bit  |  内容
 ----- | -----
 0     | Disable 32K+256K WRAM (0=Normal, 1=Disable) (when off: empty/prefetch)
-1-3   | Unknown          (Read/Write-able)
-4     | Unknown          (Always zero, not used or write only)
-5     | Enable 256K WRAM (0=Disable, 1=Normal) (when off: mirror of 32K WRAM)
-6-23  | Unknown          (Always zero, not used or write only)
-24-27 | Wait Control WRAM 256K (0-14 = 15..1 Waitstates, 15=Lockup)
-28-31 | Unknown          (Read/Write-able)
+1-3   | 用途不明          (Read/Write-able)
+4     | 用途不明          (Always zero, not used or write only)
+5     | EWRAM有効化フラグ (0=無効, 1=有効) (無効化するとIWRAMのミラー)
+6-23  | 用途不明          (Always zero, not used or write only)
+24-27 | EWRAMのWaitstate (0-14 = 15..1 Waitstates, 15=Lockup)
+28-31 | 用途不明          (Read/Write-able)
 
-bit24-27にはデフォルトで0x0dが入っていてWaitstateが2になるようになっています。 つまり 8/16/32bitアクセスに要するサイクルは 3/3/6となります。
+bit24-27にはデフォルトで13(0x0D)が入っていてWaitstateが2になるようになっています。 つまり 8/16/32bitアクセスに要するクロックサイクルは 3/3/6となります。
 
-bit24-27を0x0eにせっていすればWaitStateは1なので、8/16/32bitアクセスに要するサイクルは 2/2/4 となり最も高速にアクセスできます。 この設定はGBAとGBASPでは可能ですがGBA Microではこの値は固定なので変更不可能です。
+bit24-27を14(0x0E)にせっていすればWaitStateは1なので、8/16/32bitアクセスに要するクロックサイクルは 2/2/4 となり最も高速にアクセスできます。(いわゆる、EWRAMのオーバークロック)
+
+EWRAMのオーバークロックはGBAとGBASPでは可能ですがゲームボーイミクロでは不可能です。
+
+```
+  (おそらく)ゲームボーイミクロのEWRAMはGBAやGBASPのものよりもアクセス速度が遅い、つまりメモリ操作を完了するまでにかかる時間が長いため、EWRAMにアクセスする際にゲームボーイミクロが待つ時間(Waitstate)を減らしてしまうとまだメモリ操作が完了していないということでしょう。
+  実際にEWRAMのオーバークロックが可能かをチェックする際は、オーバークロック後にEWRAMに書き込んだデータを読み出してみて、書き込んだデータと読み出したデータが一致するかどうかを確認するという手法がよく使われます。
+```
