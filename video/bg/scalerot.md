@@ -12,31 +12,23 @@ BGスクロールレジスタに入っている値は、伸縮回転とビット
   0x0400_0028/0x0400_002c - BG2X/BG2Y - BG2 X/YオフセットX(0-27bit) (W)
   0x0400_0038/0x0400_003c - BG3X/BG3Y - BG3 X/YオフセットX(0-27bit) (W)
 ```
-
-<table>
-    <thead>
-        <tr>
-            <th>bit</th>
-            <th colspan=4 class="td-colspan">31-28</th>
-            <th colspan=1 class="td-colspan">27</th>
-            <th colspan=19 class="td-colspan">26-8</th>
-            <th colspan=8 class="td-colspan">7-0</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>内容</td>
-            <td colspan=4 class="td-colspan">0(不使用)</td>
-            <td colspan=1 class="td-colspan">符号</td>
-            <td colspan=19 class="td-colspan">整数部分 (19 bits)</td>
-            <td colspan=8 class="td-colspan">分数部分 (8 bits)</td>
-        </tr>
-    </tbody>
-</table>
+```
+  Bit   Expl.
+  0-7   小数部分 (8 bits)
+  8-26  整数部分 (19 bits)
+  27    符号     (1 bit)
+  28-31 不使用
+```
 
 例えば、0x12を設定したい時は、分数部分は0x00、整数部分は0x12にしたいのでレジスタには `0x12 << 8` を格納することになります。
 
 符号付きの32bit値を上記のレジスタに書き込むことができますが、このとき最上位bitは無視され、値は28bitに切り捨てられます。
+
+### 内部レジスタについて
+
+上記の基準点(`BGnX/Y`)は、VBlankの間に自動的に内部レジスタにコピーされ、最初の走査線の原点を指定します。内部レジスタは、各スキャンラインの後にdmxとdmy(PBとPD)によってインクリメントされます。
+
+VBlank期間外に`BGnX/Y`を変更すると即座に内部レジスタにコピーされます。
 
 ### 実際のオフセット
 
@@ -165,3 +157,4 @@ GBAでのアフィン変換は以下の行列を座標に対してかけるこ�
 BGモードが1,2のときは、[BG2CNT,BG3CNT](control.md)のbit13で、無視するかwrap(1周)するか指定することができます。
 
 BGモードが3,4,5のときははみでた部分は無視されます。
+
