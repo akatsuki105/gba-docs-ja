@@ -4,7 +4,7 @@ agbasm は gas<sup>[1](#gas)</sup> を改造したもので、GBAの逆アセン
 
 ## コマンドオプション
 
-> **Note**  
+> [!NOTE]
 > https://pastebin.com/nFpfnVvH を翻訳したもの
 
 <details>
