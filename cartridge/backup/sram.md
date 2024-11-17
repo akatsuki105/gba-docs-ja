@@ -1,7 +1,7 @@
 # 🔋 SRAM/FRAM
 
->**Note**  
-FRAM は `Ferroelectric RAM` の略で、FLASHとは別物です。
+> [!NOTE]
+> FRAM は `Ferroelectric RAM` の略で、FLASHとは別物です。
 
 ```
   SRAM: 32KB

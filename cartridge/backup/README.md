@@ -25,8 +25,8 @@ ID文字列 | 内容
 
 ## 🔋 SRAM/FRAM
 
->**Note**  
-FRAM は `Ferroelectric RAM` の略で、FLASHとは別物です。
+> [!NOTE]
+> FRAM は `Ferroelectric RAM` の略で、FLASHとは別物です。
 
 [こちら](./sram.md)を参照してください。
 
