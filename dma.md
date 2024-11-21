@@ -23,28 +23,35 @@ DMA転送がアクティブなときはCPUは一時停止しますが、`Sound/B
 DMA転送で転送するデータが始まるアドレスを指定します。
 
 ```
-0x0400_00B0 & 0x0400_00B2 - DMA0SAD - DMA0ソースレジスタ (内部メモリのみ)
-0x0400_00BC & 0x0400_00BE - DMA1SAD - DMA1ソースレジスタ 
-0x0400_00C8 & 0x0400_00CA - DMA2SAD - DMA2ソースレジスタ 
-0x0400_00D4 & 0x0400_00D6 - DMA3SAD - DMA3ソースレジスタ 
+  0x0400_00B0: DMA0SAD - DMA0ソースレジスタ (内部メモリのみ)
+  0x0400_00BC: DMA1SAD - DMA1ソースレジスタ 
+  0x0400_00C8: DMA2SAD - DMA2ソースレジスタ 
+  0x0400_00D4: DMA3SAD - DMA3ソースレジスタ 
 ```
 
-DMA0の場合は`0x07FF_FFFF`まで、DMA1,DMA2,DMA3の場合は`0x0FFF_FFFF`まで指定することが可能です。
+DMA0の場合は`0x07FF_FFFF`(内部メモリのみ)まで、DMA1,DMA2,DMA3の場合は`0x0FFF_FFFF`まで指定することが可能です。
 
 ## DMAnDAD - ターゲットレジスタ (W)
 
 DMA転送でデータ転送先のアドレスを指定します。
 
 ```
-0x0400_00B4 & 0x0400_00B6 - DMA0DAD - DMA0ターゲットレジスタ (内部メモリのみ)
-0x0400_00C0 & 0x0400_00C2 - DMA1DAD - DMA1ターゲットレジスタ (内部メモリのみ)
-0x0400_00CC & 0x0400_00CE - DMA2DAD - DMA2ターゲットレジスタ (内部メモリのみ)
-0x0400_00D8 & 0x0400_00DA - DMA3DAD - DMA3ターゲットレジスタ
+  0x0400_00B4: DMA0DAD - DMA0ターゲットレジスタ (内部メモリのみ)
+  0x0400_00C0: DMA1DAD - DMA1ターゲットレジスタ (内部メモリのみ)
+  0x0400_00CC: DMA2DAD - DMA2ターゲットレジスタ (内部メモリのみ)
+  0x0400_00D8: DMA3DAD - DMA3ターゲットレジスタ
 ```
 
 DMA0, DMA1, DMA2の場合は`0x07FF_FFFF`まで、DMA3の場合は`0x0FFF_FFFF`まで指定することが可能です。
 
 ## DMAnCNT - 制御レジスタ (R/W)
+
+```
+  0x0400_00B8: DMA0CNT
+  0x0400_00C4: DMA1CNT
+  0x0400_00D0: DMA2CNT
+  0x0400_00DC: DMA3CNT
+```
 
 `DMAnCNT.0-15`は `DMAnCNT_L`、`DMAnCNT.16-31`は `DMAnCNT_H`　と呼ぶ場合もあります。
 
