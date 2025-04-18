@@ -1,28 +1,37 @@
-# [カートリッジのプリフェッチ](https://problemkaputt.de/gbatek.htm#gbagamepakprefetch)
+# カートリッジのプリフェッチ
 
-カートリッジのプリフェッチは [WAITCNT](../system.md#0x0400_0204---waitcnt---waitstate制御レジスタ-rw)のbit14で有効にすることができます。
+カートリッジのプリフェッチは`WAITCNT.14`で有効にすることができます。
 
-プリフェッチバッファが有効になっている場合、GBAはCPUがバスを使用していないタイミングにカートリッジROMから（もしあれば）オペコードを読み出そうとします。
+プリフェッチが有効になっている場合、GBAはCPUがバスを使用していない間、カートリッジROMからオペコードを読み出そうとします。
 
-CPUが既にバッファにプリフェッチされているデータを要求した場合、メモリアクセスの際のWaitStateは0になり1サイクルでアクセスできます。
+CPUが既にバッファにプリフェッチされているデータを要求した場合、メモリアクセスの際のウェイトステートは`0`になり1サイクルでアクセスできます。
 
 プリフェッチバッファには、最大8つの16bit値が格納できます。
 
-## カートリッジROMのオペコード
-
-プリフェッチ機能はカートリッジROMのオペコードに対してのみ有効です。
-
-RAMやBIOSに配置されたオペコードに対してはプリフェッチ機能を使うことはできません。
+> [!NOTE]
+> プリフェッチはカートリッジのオペコードに対してのみ有効です。RAMやBIOSに配置されたオペコードに対してはプリフェッチは行われません。
 
 ## 有効な場面
 
 プリフェッチは次のようなオペコードで発生します。
 
-- Iサイクルで実行されるオペコードでR15を変更しないもの (shift/rotate register-by-register, load opcodes (ldr,ldm,pop,swp), multiply opcodes)
-- ロードストア命令 (ldr,str,ldm,stm,etc.)
+```
+  実行時にIサイクルが発生し、かつ R15を変更しない 命令
+    shift/rotate register-by-register
+    load opcodes (ldr,ldm,pop,swp)
+    multiply opcodes
+  ロードストア命令
+    ldr,str,ldm,stm,etc.
+```
 
 ## プリフェッチ無効バグ
 
-プリフェッチを無効にすると、R15を変更しない内部サイクルを持つカートリッジ内のオペコードに対してプリフェッチ無効バグが発生し、オペコードのフェッチ時間が1Sから1Nに変更されます。
+When Prefetch is disabled, the Prefetch Disable Bug will occur for all
 
-影響を受けるオペコード: Shift/rotate register-by-register opcodes, multiply opcodes, and load opcodes (ldr,ldm,pop,swp).
+```
+  "Opcodes in GamePak ROM with Internal Cycles which do not change R15"
+```
+
+for those opcodes, the bug changes the opcode fetch time from 1S to 1N.
+
+Note: Affected opcodes (with I cycles) are: Shift/rotate register-by-register opcodes, multiply opcodes, and load opcodes (ldr,ldm,pop,swp).
