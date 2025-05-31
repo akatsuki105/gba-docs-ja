@@ -74,9 +74,6 @@ GameBoyAdvanceについて、技術的な詳細を日本語でまとめたもの
 
 ### グラフィック
 
-- [LCD制御レジスタ](video/control.md)
-  - [DISPCNT](video/control.md)
-  - [GREENSWP](video/control.md)
 - 背景(BG)
   - [制御レジスタ(BGnCNT)](video/bg/control.md)
   - [BGモード](video/bg/mode/)

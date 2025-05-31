@@ -1,6 +1,4 @@
-# ディスプレイ制御
-
-## 0x0400_0000 - DISPCNT - LCD制御レジスタ (R/W)
+# 0x0400_0000 - DISPCNT - LCD制御レジスタ (R/W)
 
  bit  |  内容
 ---- | ----
@@ -46,44 +44,23 @@ BGモード1は、BG0,BG1はBGモード0と同じ, BG2はBGモード2と同じ�
 
 ビットマップモードでは 1つまたは2つのフレーム(バッファ)が存在します。2つのフレームが存在する場合は、どちらか1つを表示することができ、もう片方は背景に再描画することができます。
 
-### FBlank(DISPCNT.7)
+## FBlank(DISPCNT.7)
 
 FBlank(強制白塗り, Forced Blank)を有効にすると画面が真っ白になり、この間は、HBlank、VBlank以外でもVRAM、パレット、OAMにアクセスすることが可能になります。
 
 DISPCNT.5を有効にするとHBlank中にOAMにアクセス可能になりますが、[1行あたりに描画可能なスプライトの数](sprite.md#1行に同時に表示可能なスプライトの数)が減ることになります。
 
-### (BG/OBJ)有効フラグ
+## (BG/OBJ)有効フラグ
 
 デフォルトではBG0-3有効フラグとOBJ有効フラグ(bit8-12)がBGとOBJの有効無効化に使われます。
 
 bit13-14を通してWindow0/1を有効にすると、特殊効果が適用され、BGとOBJは[ウィンドウ](window.md)の影響を受けます。
 
-### フレーム選択
+## フレーム選択
 
 BGモード4-5（ビットマップモード）では、2つのフレームのうちどちらか一方が表示され(bit4で選択)、バックグラウンドでもう一方のフレームを更新することができます。
 
 BGモード3では、利用できるフレームは1つのみです。
 
 BGモード0-2(タイルモード) では、BGマップ や BGキャラクタデータ のベースアドレスを変更することで、同様の効果を得ることができます。
-
-## 0x0400_0002 - GREENSWP - グリーンスワップ (R/W)
-
->**Warning** 信頼性低
-
-Normally, red green blue intensities for a group of two pixels is output as BGRbgr (uppercase for left pixel at even xloc, lowercase for right pixel at odd xloc). 
-
-When the Green Swap bit is set, each pixel group is output as BgRbGr (ie. green intensity of each two pixels exchanged).
-
- bit  |  内容
----- | ----
-0 | グリーンスワップ (0=Normal, 1=Swap)
-1 | 未使用
-
-この機能は、最終的に生成される画像(つまり別々のBGとOBJレイヤを混合した後)に適用されるようです。 
-
-最終的には、他のディスプレイタイプ（他のピンアウトを持つ）のために意図されています。
-
-通常のGBAハードウェアでは、面白い汚れの効果を生み出しているだけです。
-
-NDSのDISPCNTレジスタは32ビット(0x0400_0000...0x0400_0003)なので、NDSモードではグリーンスワップは存在しませんが、GBAモードではNDSはグリーンスワップをサポートしています。
 
