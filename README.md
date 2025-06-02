@@ -20,7 +20,6 @@ GameBoyAdvanceについて、技術的な詳細を日本語でまとめたもの
 - [DMA転送](dma.md)
 - [割り込み](interrupt.md)
 - [システム制御](system.md)
-  - [WAITCNT](system.md)
   - [POSTFLG](system.md)
   - [HALTCNT](system.md)
   - [MEMCNT](system.md)
