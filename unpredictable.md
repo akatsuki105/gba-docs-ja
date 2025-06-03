@@ -69,16 +69,6 @@ Note: Additionally, as usually, the 32bit data value will be rotated if the data
 
 Note: The opcode prefetch is caused by the prefetch pipeline in the CPU itself, not by the external gamepak prefetch, ie. it works for code in ROM and RAM as well.
 
-## メモリのミラー
-
-- BIOS, IO: ミラー無し
-- EWRAM: 0x40000ごとに`0x02000000-0x02FFFFFF`の範囲に渡ってミラー
-- IWRAM: 0x8000ごとに`0x03000000-0x03FFFFFF`の範囲に渡ってミラー
-- Palette: 0x400ごとに`0x05000000-0x05FFFFFF`の範囲に渡ってミラー
-- VRAM: `0x06010000-0x06017FFF`が`0x06018000-0x0601FFFF`にミラー、そして0x20000ごとに`0x06000000-0x06FFFFFFF`の範囲に渡ってミラー
-- OAM: 0x400ごとに`0x07000000-0x07FFFFFF`の範囲に渡ってミラー
-- SRAM: 0x10000ごとに`0xE000000-0xFFFFFFF`の範囲に渡ってミラー
-
 ## 8bitデータをビデオメモリに書き込んだときの挙動
 
 Video Memory (BG, OBJ, OAM, Palette) can be written to in 16bit and 32bit units only. Attempts to write 8bit data (by STRB opcode) won't work: 
