@@ -16,7 +16,7 @@ SC and SD signalize Clear to Send (with crossed wires also, which requires speci
 
 ### 4000134h - RCNT (R) - モード選択レジスタ
 
-SIOCNTのbit13-12と合わせて、転送モードを設定するのに利用します。
+`SIOCNT.12-13`と合わせて、転送モードを設定するのに利用します。
 
 使われているのはbit15だけです。
 
