@@ -18,9 +18,9 @@
 
 例えば、VBlank割り込みを受け付けるためには
 
-```
-  IME = 1
-  IE  = 0bxxxx_xxxx_xxxx_xxx1
+```cpp
+  IME = 1;
+  IE  = 0bxxxx_xxxx_xxxx_xxx1;
 ```
 
 ```
@@ -38,7 +38,7 @@
   10    DMA2
   11    DMA3
   12    キー入力
-  13    Game Pak (external IRQ source)
+  13    Game Pak (external IRQ source, ゲーム中にカートリッジが抜かれると発生する模様)
   14-15 不使用
 ```
 
@@ -48,24 +48,7 @@
 
 発生した割り込みリクエストに対応するフラグが立てられます。
 
-```
-  Bit   Expl.
-  0     LCD V-Blank                    
-  1     LCD H-Blank
-  2     LCD V-Counter Match
-  3     Timer0オーバーフロー
-  4     Timer1オーバーフロー
-  5     Timer2オーバーフロー
-  6     Timer3オーバーフロー
-  7     シリアル通信
-  8     DMA0(の転送完了)
-  9     DMA1
-  10    DMA2
-  11    DMA3
-  12    キー入力
-  13    Game Pak (external IRQ source)
-  14-15 不使用
-```
+Bit と 割り込みソース の対応は `IE` と同じです。
 
 プログラム側は対応するビットに`0b1`を書き込むことで、割り込みを手動でアクノリッジする必要があり、ビットはクリアされます。
 
@@ -126,6 +109,6 @@ GBA(のCPU)は、IRQとFIQの2つの割り込みソースを提供していま�
 
 しかし、このようなゲームはハードウェアデバッガ（デバッグ目的でFIQを使用していると報告されている）がうまく動作しない可能性があることに注意してください。
 
-<sup id="fiq">1. FIQ信号はVDD35にショートカットされており常にハイになっています。</sup>
+<sup id="fiq">1. FIQ信号はVDD35にショートカットされており常にHighになっています。</sup>
 
 <sup id="doom">2. ここ最近でGBAに移植されたゲームがそのようなことをしています。 https://youtu.be/R43k-p9XdIk</sup>
