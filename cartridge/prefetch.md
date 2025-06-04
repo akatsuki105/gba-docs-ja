@@ -16,22 +16,17 @@ CPUが既にバッファにプリフェッチされているデータを要求�
 プリフェッチは次のようなオペコードで発生します。
 
 ```
-  実行時にIサイクルが発生し、かつ R15を変更しない 命令
-    shift/rotate register-by-register
-    load opcodes (ldr,ldm,pop,swp)
-    multiply opcodes
-  ロードストア命令
-    ldr,str,ldm,stm,etc.
+  1. 実行時にIサイクルが発生し、かつ R15を変更しない 命令
+      shift/rotate register-by-register
+      load opcodes (ldr,ldm,pop,swp)
+      multiply opcodes
+  2. カートリッジ以外への ロードストア命令
+      ldr,str,ldm,stm,etc.
 ```
 
 ## プリフェッチ無効バグ
 
-When Prefetch is disabled, the Prefetch Disable Bug will occur for all
+プリフェッチが無効になっている場合、プリフェッチ無効バグが発生します。
 
-```
-  "Opcodes in GamePak ROM with Internal Cycles which do not change R15"
-```
+"カートリッジROM内の命令の内、内部サイクル(Iサイクル)が発生し、R15を変更しない命令"(上記の"1"の命令たち) のコードフェッチ時間が 1S から 1N になってしまいます。
 
-for those opcodes, the bug changes the opcode fetch time from 1S to 1N.
-
-Note: Affected opcodes (with I cycles) are: Shift/rotate register-by-register opcodes, multiply opcodes, and load opcodes (ldr,ldm,pop,swp).
