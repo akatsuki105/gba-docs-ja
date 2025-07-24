@@ -36,7 +36,7 @@ BGパレット0の色0は背景色(Backdrop)として扱います。
 <table>
     <thead>
         <tr>
-            <th>bit</th>
+            <th>Bit</th>
             <th>15</th>
             <th>14</th>
             <th>13</th>
