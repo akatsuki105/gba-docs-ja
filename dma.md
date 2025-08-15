@@ -69,9 +69,10 @@ DMA0, DMA1, DMA2の場合は`0x07FF_FFFF`まで、DMA3の場合は`0x0FFF_FFFF`�
   26     R/W  ワードサイズ(0=16bit, 1=32bit)
   27     R/W  Game Pak DRQ(DMA3のみ); 0=Normal, 1=DRQ from Game Pak, DMA3
   28-29  R/W  モード (0: 即座に, 1: VBlankDMA(VBlank開始時), 2: HBlankDMA(HBlank開始時), 3: チャンネル固有)
-                CH0:   使用禁止
-                CH1,2: サウンドFIFO
-                CH3:   ビデオキャプチャ
+                モード3:
+                  CH0:   使用禁止
+                  CH1,2: サウンドFIFO
+                  CH3:   ビデオキャプチャ
   30     R/W  転送終了時にIRQを発生させるかどうか
   31     R/W  このDMAチャンネルが有効かどうか
                 転送が完了、つまり転送サイズ分の転送を完了すると自動的にクリア(bit25が0なら)
